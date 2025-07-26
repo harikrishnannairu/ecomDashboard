@@ -1,5 +1,6 @@
 package com.ecom_dashboard.ecom.config;
 
+import com.ecom_dashboard.ecom.entity.User;
 import com.ecom_dashboard.ecom.service.JwtService;
 import com.ecom_dashboard.ecom.service.UserService;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -43,7 +44,7 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
         List<GrantedAuthority> authorities=List.of(new SimpleGrantedAuthority("ROLE_"+role));
         if(userEmail != null && SecurityContextHolder.getContext().getAuthentication() == null){
             UserDetails userDetails=userService.loadUserByUsername(userEmail);
-            if(jwtService.isTokenValid(jwt,( com.ecom_dashboard.ecom.entity.User) userDetails)){
+            if(jwtService.isTokenValid(jwt,(User) userDetails)){
                 UsernamePasswordAuthenticationToken authToken=
                         new UsernamePasswordAuthenticationToken(userDetails,null,authorities);
                 authToken.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
