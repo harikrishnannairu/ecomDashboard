@@ -1,0 +1,14 @@
+<div class="bg-white shadow flex items-center justify-between px-6 py-3">
+  <button (click)="toggleSidebar.emit()" class="p-2 bg-gray-100 rounded">
+    ☰
+  </button>
+  <div class="flex items-center gap-4">
+    <input type="text" placeholder="Search..." class="border rounded px-2 py-1">
+    <button class="bg-gray-100 p-2 rounded-full">
+        <lucide-icon name="bell" class="w-6 h-6 text-gray-700 "></lucide-icon>
+    </button>
+    <div class="relative">
+      <button class="bg-gray-100 px-3 py-1 rounded">User ▼</button>
+    </div>
+  </div>
+</div>
