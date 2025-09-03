@@ -8,6 +8,7 @@ import com.ecom_dashboard.ecom.repository.ProductRepository;
 import com.ecom_dashboard.ecom.repository.UserRepository;
 import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
@@ -62,7 +63,12 @@ public class ProductServiceImp {
         if (!productRepository.existsById(id)) {
             throw new EntityNotFoundException("product not found");
         }
-        productRepository.deleteById(id);
+        try {
+            productRepository.deleteById(id);
+        }
+        catch (DataIntegrityViolationException e){
+            throw new IllegalStateException("This Product belongs to one order ,unable to delete it");
+        }
     }
 
     private ProductResponse mapToResponse(Product product) {

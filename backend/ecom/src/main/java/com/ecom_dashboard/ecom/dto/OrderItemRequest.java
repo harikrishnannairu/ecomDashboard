@@ -5,15 +5,11 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import java.util.List;
-
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-public class orderResponsePagination {
-    private List<OrderResponse> orders;
-    private int currentPage;
-    private Long totalElements;
-    private int totalPages;
+public class OrderItemRequest {
+    private Long productId;
+    private int quantity;
 }

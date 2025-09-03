@@ -5,15 +5,14 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import java.util.List;
+import java.math.BigDecimal;
 
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-public class orderResponsePagination {
-    private List<OrderResponse> orders;
-    private int currentPage;
-    private Long totalElements;
-    private int totalPages;
+public class OrderItemResponse {
+    private String ProductName;
+    private int quantity;
+    private BigDecimal totalPrice;
 }
