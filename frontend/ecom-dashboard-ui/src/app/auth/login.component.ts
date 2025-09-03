@@ -62,7 +62,7 @@ export class LoginComponent {
 
         // Redirect based on role
         if (role === 'ADMIN') {
-          this.router.navigateByUrl('/dashboard');
+          this.router.navigateByUrl('/');
         } else {
           this.router.navigateByUrl('/products');
         }
@@ -73,5 +73,11 @@ export class LoginComponent {
       },
       complete: () => this.loading = false
     });
+  }
+  logOut(){
+    if(this.token.isLoggedIn()){
+      this.token.clear();
+      this.router.navigate(['/login']);
+    }
   }
 }

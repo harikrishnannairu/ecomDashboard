@@ -1,14 +1,56 @@
-<div class="bg-white shadow flex items-center justify-between px-6 py-3">
-  <button (click)="toggleSidebar.emit()" class="p-2 bg-gray-100 rounded">
+<div class="bg-white dark:bg-gray-800 shadow flex items-center justify-between px-6 py-3">
+  <button (click)="toggleSidebar.emit()" class="p-2 bg-gray-100 rounded dark:bg-gray-700">
     ☰
   </button>
   <div class="flex items-center gap-4">
-    <input type="text" placeholder="Search..." class="border rounded px-2 py-1">
-    <button class="bg-gray-100 p-2 rounded-full">
-        <lucide-icon name="bell" class="w-6 h-6 text-gray-700 "></lucide-icon>
+    <input type="text" placeholder="Search..." class="border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700 rounded px-2 py-1 mobile-view-search">
+    <button class="bg-gray-100 p-2 rounded-full dark:bg-gray-700">
+        <lucide-icon name="bell" class="w-6 h-6 text-gray-700 dark:text-gray-100"></lucide-icon>
     </button>
-    <div class="relative">
-      <button class="bg-gray-100 px-3 py-1 rounded">User ▼</button>
+    <button (click)="toggleTheme()" class="bg-gray-100 dark:bg-gray-700 px-3 py-1 rounded" title="Toggle theme">
+
+       <lucide-icon name="moon"  *ngIf="!isDark" class="w-6 h-6 text-gray-700 dark:text-gray-100"></lucide-icon>
+
+       <lucide-icon name="sun" *ngIf="isDark" class="w-6 h-6 text-gray-700 dark:text-gray-100"></lucide-icon>
+    </button>
+    <div *ngIf="isLoggedIn" class="relative">
+      <button
+        (click)="userSection()"
+        class="bg-gray-100 px-3 py-1 rounded dark:bg-gray-700 flex items-center gap-1"
+      >
+      <lucide-icon name="user" class="w-5 h-5 text-gray-700 dark:text-gray-100"></lucide-icon> ▼
+      </button>
+
+      <!-- Dropdown -->
+      <div
+        *ngIf="dropdownOpen"
+        class="absolute right-0 mt-2 w-56 bg-white dark:bg-gray-800 border dark:border-gray-700 rounded-lg shadow-lg py-2 z-50 flex flex-col items-start justify-center gap-3.5 p-4.5"
+      >
+        <div class="px-4 py-2 border-b dark:border-gray-600 ">
+          <!-- <lucide-icon name="user" class="w-10 h-10 mb-2 text-gray-700 dark:text-gray-100"></lucide-icon> -->
+        <ng-container [ngSwitch]="userRole">
+            <lucide-icon *ngSwitchCase="'ADMIN'" name="shield" class="w-6 h-6 text-red-500"></lucide-icon>
+            <lucide-icon *ngSwitchCase="'STAFF'" name="briefcase" class="w-6 h-6 text-blue-500"></lucide-icon>
+            <lucide-icon *ngSwitchCase="'USER'" name="user" class="w-6 h-6 text-green-500"></lucide-icon>
+             <lucide-icon *ngSwitchDefault name="user" class="w-6 h-6 text-gray-500"></lucide-icon>
+        </ng-container>
+          <div class="font-semibold">{{ userName }}</div>
+          <div class="text-sm text-gray-600 dark:text-gray-400">{{ userEmail }}</div>
+        </div>
+        <button
+          (click)="goToMyOrders()"
+          class="ml-3 text-left px-4 py-2 hover:bg-gray-500 dark:hover:bg-gray-700 dark:text-gray-100"
+        >
+          My Orders
+        </button>
+        <button
+          (click)="logout()"
+          class="ml-3 text-left  hover:bg-gray-500 dark:hover:bg-gray-700 dark:text-gray-100"
+        >
+          <!-- Logout -->
+            <lucide-icon name="log-out" class="w-5 h-5"></lucide-icon>
+        </button>
+      </div>
     </div>
   </div>
 </div>

@@ -1,1 +1,71 @@
-<p>dashboard works!</p>
+<div class="p-6 space-y-6">
+  <!-- Stats Cards -->
+  <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+    <div class="bg-white dark:bg-gray-800 shadow rounded-lg p-4 text-center">
+      <p class="text-gray-500">Products</p>
+      <h2 class="text-2xl font-bold">{{ stats?.totalProducts }}</h2>
+    </div>
+    <div class="bg-white dark:bg-gray-800 shadow rounded-lg p-4 text-center">
+      <p class="text-gray-500">Orders</p>
+      <h2 class="text-2xl font-bold">{{ stats?.totalOrders }}</h2>
+    </div>
+    <div class="bg-white dark:bg-gray-800 shadow rounded-lg p-4 text-center">
+      <p class="text-gray-500">Pending Orders</p>
+      <h2 class="text-2xl font-bold">{{ stats?.pendingOrders }}</h2>
+    </div>
+    <div class="bg-white dark:bg-gray-800 shadow rounded-lg p-4 text-center">
+      <p class="text-gray-500">Revenue</p>
+      <h2 class="text-2xl font-bold">{{ stats?.totalRevenue | currency }}</h2>
+    </div>
+  </div>
+
+  <!-- Charts -->
+  <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+    <div class="bg-white dark:bg-gray-800 shadow rounded-lg p-4">
+      <h3 class="font-semibold mb-4">Orders by Status</h3>
+      <div div class="w-64 h-64 mx-auto">
+      <canvas baseChart
+        [data]="ordersChartData"
+        [options]="ordersChartOptions"
+        [type]="'pie'">
+      </canvas>
+      </div>
+    </div>
+
+    <div class="bg-white dark:bg-gray-800 shadow rounded-lg p-4">
+      <h3 class="font-semibold mb-4">Sales Trend</h3>
+      <div div class="w-64 h-64 mx-auto  overflow-x-auto">
+        <div style="min-width: 800px;">
+          <canvas baseChart
+             [data]="salesChartData"
+             [options]="salesChartOptions"
+             [type]="'bar'">
+           </canvas>
+          </div>
+        </div>
+    </div>
+  </div>
+
+  <!-- Recent Orders -->
+  <div class="bg-white dark:bg-gray-800 shadow rounded-lg p-4">
+    <h3 class="font-semibold mb-4">Recent Orders</h3>
+    <table class="w-full text-left border-collapse">
+      <thead>
+        <tr class="bg-gray-100 dark:bg-gray-700">
+          <th class="p-2">Order ID</th>
+          <th class="p-2">Customer</th>
+          <th class="p-2">Amount</th>
+          <th class="p-2">Status</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let order of recentOrders" class="border-b dark:border-gray-600">
+          <td class="p-2">{{ order.id }}</td>
+          <td class="p-2">{{ order.createdBy }}</td>
+          <td class="p-2">{{ order.totalAmount | currency }}</td>
+          <td class="p-2">{{ order.status }}</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>

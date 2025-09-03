@@ -1,0 +1,65 @@
+<div class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
+  <div class="bg-white dark:bg-gray-800 rounded-lg p-6 w-full max-w-lg shadow-lg">
+    <h2 class="text-lg font-bold mb-4">Order #{{ order.id }}</h2>
+
+    <div class="mb-4">
+      <p><strong>Customer:</strong> {{ order.createdBy }}</p>
+      <p><strong>Total:</strong> {{ order.totalAmount | currency }}</p>
+      <p><strong>Status:</strong>
+            <span *ngIf="viewMyOrders"
+            class="ml-2 px-2  py-1 rounded text-xs font-semibold"
+            [ngClass]="{
+              'bg-yellow-200 text-yellow-800': order.status === 'PENDING',
+              'bg-blue-200 text-blue-800': order.status === 'SHIPPED',
+              'bg-green-200 text-green-800': order.status === 'DELIVERED',
+              'bg-red-200 text-red-800': order.status === 'CANCELLED'
+            }"
+          >
+            {{ order.status }}
+          </span></p>
+      <ng-container *ngIf="!viewMyOrders">
+      <select [(ngModel)]="order.status" class="border rounded px-3 py-2 w-full  dark:bg-gray-700">
+        <option value="PENDING">Pending</option>
+        <option value="SHIPPED">Shipped</option>
+        <option value="DELIVERED">Delivered</option>
+        <option value="CANCELLED">Cancelled</option>
+      </select>
+      </ng-container>
+    </div>
+
+    <div class="mb-4">
+      <h3 class="font-semibold mb-2">Items</h3>
+      <table class="w-full border-collapse">
+        <thead>
+          <tr class="bg-gray-100 dark:bg-gray-700">
+            <th class="p-2">Product</th>
+            <th class="p-2">Qty</th>
+            <th class="p-2">Price</th>
+            <th class="p-2">Subtotal</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let item of order.items" class="border-b">
+            <td class="p-2">{{ item.productName }}</td>
+            <td class="p-2">{{ item.quantity }}</td>
+            <td class="p-2">{{ (item.totalPrice/item.quantity) | currency }}</td>
+            <td class="p-2">{{ item.totalPrice | currency }}</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="flex justify-end gap-2">
+      <button class="px-4 py-2 bg-gray-300 dark:bg-gray-600 rounded" (click)="close()">Close</button>
+      <button class="px-4 py-2 bg-blue-600 text-white rounded" *ngIf="!viewMyOrders" (click)="updateStatus()">Update</button>
+     <button
+      *ngIf="order?.status === 'PENDING' && viewMyOrders"
+      (click)="cancelOrder.emit(order.id)"
+      class="bg-red-500 text-white px-4 py-2 rounded"
+      [disabled]="cancelling"
+    >
+      {{ cancelling ? 'Cancelling...' : 'Cancel Order' }}
+    </button>
+    </div>
+  </div>
+</div>

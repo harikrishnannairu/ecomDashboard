@@ -13,9 +13,10 @@ export const routes: Routes = [
       path:'',
       component:LayoutComponent,
       children:[
-        {path:'',component:DashboardComponent}
-        // {path:'products',loadComponent:()=> import('./features/products/products.component').then(c=>c.ProductsComponent)},
-        // {path:'orders',loadComponent:()=>import('./features/orders/orders.component').then(c=>c.OrdersComponent)},
+        {path:'',component:DashboardComponent},
+        {path:'products',loadComponent:()=> import('./features/products/products-list.component').then(c=>c.ProductsListComponent)},
+        {path:'orders',loadComponent:()=>import('./features/orders/orders-list.component').then(c=>c.OrdersListComponent)},
+        {path:'my-orders',loadComponent:()=>import('./features/my-orders/my-orders.component').then(c=>c.MyOrdersComponent)}
         // {path:'chatgpt',loadComponent:()=>import('./features/chatgpt/chatgpt.component').then(c=>c.ChatgptComponent)}
 
       ]

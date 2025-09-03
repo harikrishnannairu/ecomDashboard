@@ -21,4 +21,7 @@ export class AuthService{
         let url=`${this.base}/register`;
         return this.http.post<AuthResponse>(url,request);
     }
+    logOut(){
+        
+    }
 }

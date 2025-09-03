@@ -14,7 +14,7 @@ export class TokenService{
         return localStorage.getItem(TOKEN_KEY);
     }
 
-    clear(){
+     clear(){
         localStorage.removeItem(TOKEN_KEY);
     }
 
